@@ -1,3 +1,7 @@
+/*
+ * @autor:rgvillareal
+ *
+ */
 package com.rent.car.api.controller;
 
 import org.slf4j.Logger;
@@ -11,15 +15,25 @@ import com.rent.car.api.services.CustomerServices;
 import com.rent.car.model.dto.ReservationSurchargesDTO;
 import io.swagger.annotations.Api;
 
+/**
+ * The Class CustomerApiImpl.
+ */
 @Api(tags = "Customer")
 @Controller
 public class CustomerApiImpl implements CustomerApi {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReservationApiImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerApiImpl.class);
 
     @Autowired
     private CustomerServices customerServices = new CustomerServices();
 
+    /**
+     * Gets the customer reservation.
+     *
+     * @param customerId
+     *     the customer id
+     * @return the customer reservation
+     */
     @Override
     public ResponseEntity<ReservationSurchargesDTO> getCustomerReservation(Long customerId) {
 
@@ -32,10 +46,9 @@ public class CustomerApiImpl implements CustomerApi {
         } catch (Exception e) {
 
         }
-        HttpStatus httpStatus = HttpStatus.OK;
 
         LOGGER.info("End  | getCustomerReservation");
-        return new ResponseEntity<>(reservationSurchargesDTO, httpStatus);
+        return new ResponseEntity<>(reservationSurchargesDTO, HttpStatus.OK);
     }
 
 

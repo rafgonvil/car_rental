@@ -27,7 +27,7 @@ public class Reservation  implements java.io.Serializable {
 
 
      private Long reservationid;
-     private Cars cars;
+     private Car car;
      private Customer customer;
      private Date startdate;
      private Date enddate;
@@ -39,14 +39,14 @@ public class Reservation  implements java.io.Serializable {
     }
 
 	
-    public Reservation(Cars cars, Customer customer, Date startdate, Double reservationprice) {
-        this.cars = cars;
+    public Reservation(Car car, Customer customer, Date startdate, Double reservationprice) {
+        this.car = car;
         this.customer = customer;
         this.startdate = startdate;
         this.reservationprice = reservationprice;
     }
-    public Reservation(Cars cars, Customer customer, Date startdate, Date enddate, Double reservationprice, Double finalprice, Double penaltyprice) {
-       this.cars = cars;
+    public Reservation(Car car, Customer customer, Date startdate, Date enddate, Double reservationprice, Double finalprice, Double penaltyprice) {
+       this.car = car;
        this.customer = customer;
        this.startdate = startdate;
        this.enddate = enddate;
@@ -69,12 +69,12 @@ public class Reservation  implements java.io.Serializable {
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="carid", nullable=false)
-    public Cars getCars() {
-        return this.cars;
+    public Car getCar() {
+        return this.car;
     }
     
-    public void setCars(Cars cars) {
-        this.cars = cars;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

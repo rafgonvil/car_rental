@@ -14,6 +14,9 @@ import com.rent.car.model.dto.ReservationSurchargesDTO;
 import com.rent.car.model.persistence.Customer;
 import com.rent.car.model.persistence.Reservation;
 
+/**
+ * The Class CustomerServices.
+ */
 @Service
 public class CustomerServices {
 
@@ -28,12 +31,13 @@ public class CustomerServices {
     /**
      * Gets the customer.
      *
-     * @param long1
+     * @param customerId
      *     the long 1
      * @return the customer
      */
-    public Customer getCustomer(Long long1) {
-        return customerRepository.getOne(long1);
+    public Customer getCustomer(Long customerId) {
+        LOGGER.info("INI  | getCustomer. customerId = {} ", customerId);
+        return customerRepository.getOne(customerId);
     }
 
     /**
@@ -45,7 +49,7 @@ public class CustomerServices {
      *     the points
      */
     public void setPoints(Customer customer, int points) {
-
+        LOGGER.info("INI  | setPoints. customer = {} , points = {}", customer, points);
         customer.setPointsaccumulated(customer.getPointsaccumulated() + points);
 
         customerRepository.save(customer);
@@ -59,6 +63,7 @@ public class CustomerServices {
      * @return the customer reservations
      */
     public ReservationSurchargesDTO getCustomerReservations(Long customerId) {
+        LOGGER.info("INI  | getCustomerReservations. customerId = {} ", customerId);
         // Retrieving customer
         Customer customer = new Customer();
 
@@ -69,6 +74,7 @@ public class CustomerServices {
             // Calculate penaltyPrice and final price
             reservationServices.fullFilledPrice(reservation);
         }
-        return TransformCustomerReservations.transformToDTO(customer);
+        LOGGER.info("End  | getCustomerReservations");
+        return TransformCustomerReservations.transformCustomerReservationToDTO(customer);
     }
 }

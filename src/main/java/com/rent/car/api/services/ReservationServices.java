@@ -14,10 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.rent.car.api.repository.ReservationRepository;
 import com.rent.car.api.utils.Constants;
-import com.rent.car.model.persistence.Cars;
+import com.rent.car.model.persistence.Car;
 import com.rent.car.model.persistence.Customer;
 import com.rent.car.model.persistence.Reservation;
 
+/**
+ * The Class ReservationServices.
+ */
 @Service
 public class ReservationServices {
 
@@ -37,24 +40,24 @@ public class ReservationServices {
      *
      * @param carId
      *     the car id
-     * @param long1
+     * @param customerId
      *     the long 1
      * @param endDate
      *     the end date
      * @return the reservation
      */
-    public Reservation saveReservation(String carId, Long long1, String endDate) {
-        LOGGER.info("INI  | saveReservation. car = {}, customerId = {}, endDate = {} ", carId, long1, endDate);
+    public Reservation saveReservation(String carId, Long customerId, String endDate) {
+        LOGGER.info("INI  | saveReservation. car = {}, customerId = {}, endDate = {} ", carId, customerId, endDate);
         Reservation reservationData = new Reservation();
         // Retrieving customer
         try {
-            Customer customer = customerServices.getCustomer(long1);
+            Customer customer = customerServices.getCustomer(customerId);
 
             // Retrieving car
-            Cars car = carsServices.getCarFromDatabase(carId);
+            Car car = carsServices.getCarFromDatabase(carId);
 
             // Set reservation params
-            reservationData.setCars(car);
+            reservationData.setCar(car);
             reservationData.setCustomer(customer);
             reservationData.setStartdate(new Date());
             reservationData.setEnddate(new SimpleDateFormat("dd/MM/yyyy").parse(endDate));
@@ -72,11 +75,22 @@ public class ReservationServices {
             e.printStackTrace();
         }
         LOGGER.info("End  | saveReservation");
-        Reservation reservation = reservationRepository.save(reservationData);
-        return reservation;
+        return reservationRepository.save(reservationData);
     }
 
-    private Double calculateReservationPrice(Cars car, Customer customer, long days) {
+    /**
+     * Calculate reservation price.
+     *
+     * @param car
+     *     the car
+     * @param customer
+     *     the customer
+     * @param days
+     *     the days
+     * @return the double
+     */
+    private Double calculateReservationPrice(Car car, Customer customer, long days) {
+        LOGGER.info("INI  | calculateReservationPrice. car = {}, customer = {}, endDate = {} ", car, customer, days);
         Double result = 0.0;
         switch (car.getCartype()) {
             case Constants.CAR_TYPE_PREMIUM:
@@ -94,6 +108,7 @@ public class ReservationServices {
             default:
                 break;
         }
+        LOGGER.info("End  | calculateReservationPrice");
         return result;
     }
 
@@ -107,6 +122,7 @@ public class ReservationServices {
      * @return the premium price
      */
     private Double getPremiumPrice(long days, long price) {
+        LOGGER.info("INI  | getPremiumPrice. days = {}, price = {}", days, price);
         return Double.valueOf(days * price);
     }
 
@@ -120,6 +136,7 @@ public class ReservationServices {
      * @return the suv price
      */
     private Double getSuvPrice(long days, long price) {
+        LOGGER.info("INI  | getSuvPrice. days = {}, price = {}", days, price);
         Double reservationPrice;
         if (days <= 7) {
             reservationPrice = Double.valueOf(days * price);
@@ -128,6 +145,7 @@ public class ReservationServices {
         } else {
             reservationPrice = Double.valueOf(7 * price) + ((price * 0.8) * 23) + ((price * 0.5) * (days - 30));
         }
+        LOGGER.info("End  | getSuvPrice");
         return reservationPrice;
     }
 
@@ -141,12 +159,14 @@ public class ReservationServices {
      * @return the small price
      */
     private Double getSmallPrice(long days, long price) {
+        LOGGER.info("INI  | getSmallPrice. days = {}, price = {}", days, price);
         Double reservationPrice;
         if (days <= 7) {
             reservationPrice = Double.valueOf(days * price);
         } else {
             reservationPrice = Double.valueOf(7 * price) + ((price * 0.6) * (days - 7));
         }
+        LOGGER.info("End  | getSmallPrice");
         return reservationPrice;
     }
 
@@ -157,8 +177,8 @@ public class ReservationServices {
      *     the reservation
      */
     public void fullFilledPrice(Reservation reservation) {
-        long result = 0;
-        switch (reservation.getCars().getCartype()) {
+        LOGGER.info("INI  | fullFilledPrice. Reservation = {}", reservation);
+        switch (reservation.getCar().getCartype()) {
             case Constants.CAR_TYPE_PREMIUM:
 
                 getPremiumPriceWithSurcharges(
@@ -179,6 +199,7 @@ public class ReservationServices {
                 break;
 
         }
+        LOGGER.info("End  | fullFilledPrice");
     }
 
     /**
@@ -191,8 +212,13 @@ public class ReservationServices {
      * @return the premium price with surcharges
      */
     private void getPremiumPriceWithSurcharges(Reservation reservation, long extraDays) {
+        LOGGER
+            .info(
+                "INI  | getPremiumPriceWithSurcharges. reservation = {}, extraDays = {}, endDate = {} ",
+                reservation,
+                extraDays);
         if (extraDays > 0) {
-            Double penaltyPrice = (reservation.getCars().getPrice() * 1.2) * extraDays;
+            Double penaltyPrice = (reservation.getCar().getPrice() * 1.2) * extraDays;
 
             // Calculate penalty Price
             reservation.setPenaltyprice(penaltyPrice);
@@ -201,7 +227,7 @@ public class ReservationServices {
             reservation.setPenaltyprice(0.0);
             reservation.setFinalprice(reservation.getReservationprice());
         }
-
+        LOGGER.info("End  | getPremiumPriceWithSurcharges");
     }
 
     /**
@@ -214,8 +240,9 @@ public class ReservationServices {
      * @return the SUV price with surcharges
      */
     private void getSUVPriceWithSurcharges(Reservation reservation, long extraDays) {
+        LOGGER.info("INI  | getSUVPriceWithSurcharges. reseervation = {}, extraDays = {} ", reservation, extraDays);
         if (extraDays > 0) {
-            Double penaltyPrice = (reservation.getCars().getPrice() + (Constants.CAR_PRICE_SMALL * 0.6)) * extraDays;
+            Double penaltyPrice = (reservation.getCar().getPrice() + (Constants.CAR_PRICE_SMALL * 0.6)) * extraDays;
 
             // Calculate penalty Price
             reservation.setPenaltyprice(penaltyPrice);
@@ -224,6 +251,7 @@ public class ReservationServices {
             reservation.setPenaltyprice(0.0);
             reservation.setFinalprice(reservation.getReservationprice());
         }
+        LOGGER.info("End  | getSUVPriceWithSurcharges");
     }
 
     /**
@@ -236,7 +264,8 @@ public class ReservationServices {
      * @return the small price with surcharges
      */
     private void getSmallPriceWithSurcharges(Reservation reservation, long extraDays) {
-        Double penaltyPrice = (reservation.getCars().getPrice() * 1.3) * extraDays;
+        LOGGER.info("INI  | getSmallPriceWithSurcharges. reservation = {}, extraDays = {}", reservation, extraDays);
+        Double penaltyPrice = (reservation.getCar().getPrice() * 1.3) * extraDays;
         if (extraDays > 0) {
             // Calculate penalty Price
             reservation.setPenaltyprice(penaltyPrice);
@@ -245,8 +274,6 @@ public class ReservationServices {
             reservation.setPenaltyprice(0.0);
             reservation.setFinalprice(reservation.getReservationprice());
         }
+        LOGGER.info("End  | getSmallPriceWithSurcharges");
     }
-
-
-
 }

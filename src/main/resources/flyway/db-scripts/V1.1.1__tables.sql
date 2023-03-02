@@ -25,7 +25,7 @@ CREATE TABLE car_rental.customer (
 )
 ;
 
-CREATE TABLE car_rental.cars (
+CREATE TABLE car_rental.car (
 	carId text NOT NULL,
 	carType text NOT NULL,
 	price bigint NOT NULL,
@@ -36,10 +36,10 @@ CREATE TABLE car_rental.cars (
 -- Primary key
 ALTER TABLE car_rental.reservation ADD CONSTRAINT pk_reservation PRIMARY KEY (reservationId);
 ALTER TABLE car_rental.customer ADD CONSTRAINT pk_customer PRIMARY KEY (customerId);
-ALTER TABLE car_rental.cars ADD CONSTRAINT pk_car PRIMARY KEY (carId);
+ALTER TABLE car_rental.car ADD CONSTRAINT pk_car PRIMARY KEY (carId);
 
 -- Foreign keys
-ALTER TABLE car_rental.reservation ADD CONSTRAINT fk_car FOREIGN KEY (carId) REFERENCES car_rental.cars(carId) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE car_rental.reservation ADD CONSTRAINT fk_car FOREIGN KEY (carId) REFERENCES car_rental.car(carId) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE car_rental.reservation ADD CONSTRAINT fk_customer FOREIGN KEY (customerId) REFERENCES car_rental.customer(customerId) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- Drop Sequences
@@ -54,7 +54,7 @@ CREATE SEQUENCE reservation_id_seq INCREMENT BY 1 START WITH 2 NO MAXVALUE NO CY
 ALTER TABLE car_rental.reservation ALTER COLUMN reservationId SET DEFAULT NEXTVAL('reservation_id_seq');
 
 -- Uniques
-ALTER TABLE car_rental.cars ADD CONSTRAINT const_car_key UNIQUE (carId);
+ALTER TABLE car_rental.car ADD CONSTRAINT const_car_key UNIQUE (carId);
 ALTER TABLE car_rental.customer ADD CONSTRAINT const_customer_key UNIQUE (customerId);
 ALTER TABLE car_rental.reservation ADD CONSTRAINT const_reservation_key UNIQUE (reservationId);
 

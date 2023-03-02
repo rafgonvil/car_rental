@@ -1,3 +1,7 @@
+/*
+ * @autor:rgvillareal
+ *
+ */
 package com.rent.car.api.controller;
 
 import org.slf4j.Logger;
@@ -15,6 +19,9 @@ import com.rent.car.model.dto.ReservationDTO;
 import com.rent.car.model.persistence.Reservation;
 import io.swagger.annotations.Api;
 
+/**
+ * The Class ReservationApiImpl.
+ */
 @Api(tags = "Reservation")
 @Controller
 public class ReservationApiImpl implements ReservationApi {
@@ -25,6 +32,13 @@ public class ReservationApiImpl implements ReservationApi {
     private ReservationServices reservationServices = new ReservationServices();
 
 
+    /**
+     * Reservate car.
+     *
+     * @param collectionCarsReservations
+     *     the collection cars reservations
+     * @return the response entity
+     */
     @Override
     public ResponseEntity<CollectionReservations> reservateCar(CollectionCarsReservations collectionCarsReservations) {
         LOGGER.info("INI  | reservateCar. body = {} ", collectionCarsReservations);
@@ -39,15 +53,14 @@ public class ReservationApiImpl implements ReservationApi {
                             carId,
                             collectionCarsReservations.getCustomerId(),
                             collectionCarsReservations.getEndDate());
-                ReservationDTO reservationDTOSaved = TransformReservation.transformToDTO(reservationSaved);
+                ReservationDTO reservationDTOSaved = TransformReservation.transformReservationToDTO(reservationSaved);
                 collectionReservations.addItemsItem(reservationDTOSaved);
             } catch (Exception e) {
 
             }
         }
-        HttpStatus httpStatus = HttpStatus.OK;
 
         LOGGER.info("End  | reservateCar");
-        return new ResponseEntity<>(collectionReservations, httpStatus);
+        return new ResponseEntity<>(collectionReservations, HttpStatus.OK);
     }
 }

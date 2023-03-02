@@ -1,5 +1,12 @@
+/*
+ * @autor:rgvillareal
+ *
+ */
 package com.rent.car.api.utils;
 
+/**
+ * The Class Constants.
+ */
 public class Constants {
 
     private Constants() {} // Prevents instantiation

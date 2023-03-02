@@ -1,3 +1,7 @@
+/*
+ * @autor:rgvillareal
+ *
+ */
 package com.rent.car.api;
 
 import org.springframework.boot.SpringApplication;
@@ -6,7 +10,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-// @AutoConfiguration(after = {DataSourceAutoConfiguration.class})
+/**
+ * The Class Main.
+ */
 @EnableJpaRepositories("com.rent.car.api.repository")
 @SpringBootApplication
 @EnableTransactionManagement

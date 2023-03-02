@@ -1,6 +1,7 @@
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\main\java\com\rent\car\api\services\CustomerServices.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\target\generated-sources\src\main\java\com\rent\car\model\dto\CarDTO.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\main\java\com\rent\car\api\controller\ReservationApiImpl.java
+C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\target\generated-sources\src\main\java\com\rent\car\model\persistence\Car.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\main\java\com\rent\car\api\mapper\TransformCar.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\main\java\com\rent\car\api\mapper\TransformCustomer.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\target\generated-sources\src\main\java\com\rent\car\model\dto\CollectionReservations.java
@@ -19,7 +20,6 @@ C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\ma
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\main\java\com\rent\car\api\mapper\TransformReservation.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\target\generated-sources\src\main\java\com\rent\car\model\dto\ReservationCalcualtedDTO.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\target\generated-sources\src\main\java\com\rent\car\model\dto\CustomerDTO.java
-C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\target\generated-sources\src\main\java\com\rent\car\model\persistence\Cars.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\main\java\com\rent\car\api\repository\CustomerRepository.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\src\main\java\com\rent\car\api\repository\CarsRepository.java
 C:\Users\rafae\OneDrive\Escritorio\Programacion\workspace-2022\car_rental\target\generated-sources\src\main\java\com\rent\car\api\CustomerApi.java
