@@ -1,0 +1,8 @@
+parameters:
+  cars:
+    in: body
+    name: reservation
+    description: Reservation
+    required: true
+    schema:
+      $ref: './model.yaml#/definitions/CollectionCarsReservations'

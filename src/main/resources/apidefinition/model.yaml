@@ -1,0 +1,90 @@
+definitions:
+  CollectionReservations:
+    type: object
+    properties:
+      items:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/ReservationDTO"
+  CollectionCarsReservations:
+    type: object
+    properties:
+      cars:
+        type: array
+        uniqueItems: true
+        items:
+           type: string
+        example: ["BMW 7","Kia Sorendo"]    
+      customerId:
+        type: integer
+        format: int64
+        required: true 
+        example: 1
+      endDate:
+        type: string
+        required: true    
+        example: "23/03/2023"        
+  ReservationDTO:
+    type: object
+    properties: 
+     car:
+        $ref: "#/definitions/CarDTO"
+     customer:
+        $ref: "#/definitions/CustomerDTO"
+     startDate:
+      type: string
+     endDate:
+      type: string
+     reservationPrice:
+      type: string   
+     penaltyPrice:
+      type: string
+     finalPrice:
+      type: string
+         
+  CarDTO:
+    type: object
+    properties: 
+     carId:
+        type: string
+     carType:
+        type: string
+     price:
+        type: integer
+        format: int64
+  CustomerDTO:
+    type: object
+    properties: 
+     customerId:
+        type: integer
+        format: int64
+     loyalty_point:
+        type: string
+  ReservationSurchargesDTO:
+    type: object
+    properties: 
+     customer:
+        $ref: "#/definitions/CustomerDTO"
+     reservations:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/ReservationCalcualtedDTO"
+  ReservationCalcualtedDTO:
+    type: object
+    properties: 
+     car:
+        $ref: "#/definitions/CarDTO"
+     startDate:
+      type: string
+     endDate:
+      type: string
+     reservationPrice:
+      type: string
+     penaltyPrice:
+      type: string    
+     finalPrice:
+      type: string
+             
+                       

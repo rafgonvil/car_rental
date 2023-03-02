@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering 
+  PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+
+	<schema-selection match-schema="car_rental" />
+	<type-mapping>
+		<sql-type jdbc-type="BIGINT" hibernate-type="java.lang.Long"
+			not-null="false">
+		</sql-type>
+		<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer"
+			not-null="false">
+		</sql-type>
+		<sql-type jdbc-type="BIGINT" hibernate-type="java.lang.Long"
+			not-null="true">
+		</sql-type>
+		<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer"
+			not-null="true">
+		</sql-type>
+		<sql-type jdbc-type="BIT" hibernate-type="java.lang.Boolean"
+			not-null="true">
+		</sql-type>
+		<sql-type jdbc-type="NUMERIC" hibernate-type="java.lang.Double"
+			not-null="true">
+		</sql-type>
+		<sql-type jdbc-type="NUMERIC" hibernate-type="java.lang.Double"
+			not-null="false">
+		</sql-type>
+	</type-mapping>
+	<table-filter match-name="flyway_schema_history"
+		exclude="true" />
+	
+	<table name="reservation" schema="car_rental">
+		<primary-key>
+			<!-- setting up a specific id generator for a table -->
+			<generator class="sequence">
+				<param name="sequence_name">reservation_id_seq</param>
+				<param name="initial_value">0</param>
+				<param name="increment_size">1</param>
+				<param name="cyclic">true</param>
+				<param name="max_lo">-1</param>
+			</generator>
+			<key-column name="reservationId" />
+		</primary-key>
+	</table>
+
+
+</hibernate-reverse-engineering>
